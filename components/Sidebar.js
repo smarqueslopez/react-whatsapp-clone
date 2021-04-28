@@ -6,6 +6,7 @@ import MoreVertIcon from '@material-ui/icons/MoreVert'
 import SearchIcon from '@material-ui/icons/Search'
 import { useState } from 'react'
 import * as EmailValidator from 'email-validator'
+import { auth } from '../firebase'
 
 function Sidebar() {
   const [anchorEl, setAnchorEl] = useState(false)
@@ -18,7 +19,7 @@ function Sidebar() {
     if (!input && !EmailValidator.validate(input)) {
       return null
     } else {
-      
+
     }
   }
 
@@ -30,19 +31,20 @@ function Sidebar() {
           <IconButton>
             <DonutLargeIcon />
           </IconButton>
-          <IconButton>
-            <ChatIcon onClick={createChat} />
+          <IconButton onClick={createChat}>
+            <ChatIcon />
           </IconButton>
-          <IconButton>
-            <MoreVertIcon onClick={() => setAnchorEl(true)} />
+          <IconButton onClick={() => setAnchorEl(true)}>
+            <MoreVertIcon />
           </IconButton>
           <Menu
             id='simple-menu'
             anchorOrigin={{
-              vertical: 'bottom',
+              vertical: 'top',
               horizontal: 'right'
             }}
             keepMounted
+            getContentAnchorEl={null}
             open={anchorEl}
             onClose={() => setAnchorEl(false)}
           >
@@ -60,13 +62,13 @@ function Sidebar() {
             <MenuItem onClick={() => setAnchorEl(false)}>
               Configuration
             </MenuItem>
-            <MenuItem onClick={() => setAnchorEl(false)}>Logout</MenuItem>
+            <MenuItem onClick={() => auth.signOut()}>Logout</MenuItem>
           </Menu>
         </IconsContainer>
       </Header>
       <Search>
         <SearchIcon />
-        <SearchInput placeholder='Search in chats' />
+        <SearchInput placeholder='Search or start a new chat' />
       </Search>
     </Container>
   )
