@@ -1,4 +1,11 @@
-import { Avatar, Button, IconButton, Menu, MenuItem } from '@material-ui/core'
+import {
+  Avatar,
+  TextField,
+  IconButton,
+  Menu,
+  MenuItem,
+  InputAdornment
+} from '@material-ui/core'
 import styled from 'styled-components'
 import ChatIcon from '@material-ui/icons/Chat'
 import DonutLargeIcon from '@material-ui/icons/DonutLarge'
@@ -67,8 +74,16 @@ function Sidebar() {
         </IconsContainer>
       </Header>
       <Search>
-        <SearchIcon />
-        <SearchInput placeholder='Search or start a new chat' />
+        <SearchInput
+          placeholder='Search or start a new chat'
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position='start'>
+                <SearchIcon />
+              </InputAdornment>
+            )
+          }}
+        />
       </Search>
     </Container>
   )
@@ -85,7 +100,7 @@ const Header = styled.div`
   position: sticky;
   top: 0;
   z-index: 1;
-  background-color: white;
+  background-color: #ededed;
   border-bottom: 1px solid whitesmoke;
 `
 const UserAvatar = styled(Avatar)`
@@ -99,17 +114,40 @@ const UserAvatar = styled(Avatar)`
 const IconsContainer = styled.div``
 
 const Search = styled.div`
-  padding: 20px;
+  padding: 15px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   border-radius: 2px;
+  background-color: #f6f6f6;
 `
 
-const SearchInput = styled.input`
+const SearchInput = styled(TextField)`
   outline-width: 0;
   border: none;
   flex: 1;
+
+  &&& {
+    padding: 0 10px;
+    border-radius: 25px;
+    background-color: white;
+
+    .MuiInputBase-root {
+      border-bottom: none;
+
+      &::before {
+        border-bottom: none;
+      }
+
+      &.MuiInput-underline:after {
+        border-bottom: none;
+      }
+
+      .MuiInputAdornment-root {
+        color: rgba(0, 0, 0, 0.54);
+      }
+    }
+  }
 `
 
 export default Sidebar
