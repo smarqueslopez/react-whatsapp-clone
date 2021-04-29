@@ -9,9 +9,9 @@ import * as EmailValidator from 'email-validator'
 function MenuSidebar() {
   const signOut = () => auth.signOut()
 
-  const [anchorMenu, setAnchorMenu] = useState(false)
-  const openMenu = () => setAnchorMenu(true)
-  const closeMenu = () => setAnchorMenu(false)
+  const [anchorMenu, setAnchorMenu] = useState(null)
+  const openMenu = (event) => setAnchorMenu(event.currentTarget)
+  const closeMenu = () => setAnchorMenu(null)
 
   const createChat = () => {
     const input = prompt(
@@ -38,13 +38,14 @@ function MenuSidebar() {
       </IconButton>
       <Menu
         id='simple-menu'
+        anchorEl={anchorMenu}
         anchorOrigin={{
           vertical: 'top',
           horizontal: 'right'
         }}
         keepMounted
         getContentAnchorEl={null}
-        open={anchorMenu}
+        open={Boolean(anchorMenu)}
         onClose={closeMenu}
       >
         <MenuItem onClick={closeMenu}>New Group</MenuItem>
