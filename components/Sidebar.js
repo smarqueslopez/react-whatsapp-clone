@@ -8,15 +8,20 @@ import SearchIcon from '@material-ui/icons/Search'
 import { useState } from 'react'
 import { auth } from '../firebase'
 import { useAuthState } from 'react-firebase-hooks/auth'
+import ProfileDrawer from './ProfileDrawer'
 import MenuSidebar from './MenuSidebar'
 
 function Sidebar() {
   const [user] = useAuthState(auth)
 
+  const [anchorDrawer, setAnchorDrawer] = useState(false)
+  const openDrawer = () => setAnchorDrawer(true)
+  const closeDrawer = () => setAnchorDrawer(false)
+
   return (
     <Container>
       <Header>
-        <UserAvatar src={user.photoURL} />
+        <UserAvatar src={user.photoURL} onClick={openDrawer} />
         <IconsContainer>
           <MenuSidebar />
         </IconsContainer>
@@ -33,6 +38,11 @@ function Sidebar() {
           }}
         />
       </Search>
+      <ProfileDrawer
+        open={anchorDrawer}
+        openDrawer={openDrawer}
+        closeDrawer={closeDrawer}
+      />
     </Container>
   )
 }
