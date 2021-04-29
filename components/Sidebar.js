@@ -14,8 +14,10 @@ import SearchIcon from '@material-ui/icons/Search'
 import { useState } from 'react'
 import * as EmailValidator from 'email-validator'
 import { auth } from '../firebase'
+import { useAuthState } from 'react-firebase-hooks/auth'
 
 function Sidebar() {
+  const [user] = useAuthState(auth)
   const [anchorEl, setAnchorEl] = useState(false)
 
   const createChat = () => {
@@ -33,7 +35,7 @@ function Sidebar() {
   return (
     <Container>
       <Header>
-        <UserAvatar />
+        <UserAvatar src={user.photoURL} />
         <IconsContainer>
           <IconButton>
             <DonutLargeIcon />
