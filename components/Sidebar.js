@@ -1,78 +1,24 @@
 import {
   Avatar,
   TextField,
-  IconButton,
-  Menu,
-  MenuItem,
   InputAdornment
 } from '@material-ui/core'
 import styled from 'styled-components'
-import ChatIcon from '@material-ui/icons/Chat'
-import DonutLargeIcon from '@material-ui/icons/DonutLarge'
-import MoreVertIcon from '@material-ui/icons/MoreVert'
 import SearchIcon from '@material-ui/icons/Search'
 import { useState } from 'react'
-import * as EmailValidator from 'email-validator'
 import { auth } from '../firebase'
 import { useAuthState } from 'react-firebase-hooks/auth'
+import MenuSidebar from './MenuSidebar'
 
 function Sidebar() {
   const [user] = useAuthState(auth)
-  const [anchorEl, setAnchorEl] = useState(false)
-
-  const createChat = () => {
-    const input = prompt(
-      'Please enter an email address for the user you whish to chat with'
-    )
-
-    if (!input && !EmailValidator.validate(input)) {
-      return null
-    } else {
-
-    }
-  }
 
   return (
     <Container>
       <Header>
         <UserAvatar src={user.photoURL} />
         <IconsContainer>
-          <IconButton>
-            <DonutLargeIcon />
-          </IconButton>
-          <IconButton onClick={createChat}>
-            <ChatIcon />
-          </IconButton>
-          <IconButton onClick={() => setAnchorEl(true)}>
-            <MoreVertIcon />
-          </IconButton>
-          <Menu
-            id='simple-menu'
-            anchorOrigin={{
-              vertical: 'top',
-              horizontal: 'right'
-            }}
-            keepMounted
-            getContentAnchorEl={null}
-            open={anchorEl}
-            onClose={() => setAnchorEl(false)}
-          >
-            <MenuItem onClick={() => setAnchorEl(false)}>New Group</MenuItem>
-            <MenuItem onClick={() => setAnchorEl(false)}>
-              New Broadcast
-            </MenuItem>
-            <MenuItem onClick={() => setAnchorEl(false)}>Profile</MenuItem>
-            <MenuItem onClick={() => setAnchorEl(false)}>
-              Archived messges
-            </MenuItem>
-            <MenuItem onClick={() => setAnchorEl(false)}>
-              Starred messages
-            </MenuItem>
-            <MenuItem onClick={() => setAnchorEl(false)}>
-              Configuration
-            </MenuItem>
-            <MenuItem onClick={() => auth.signOut()}>Logout</MenuItem>
-          </Menu>
+          <MenuSidebar />
         </IconsContainer>
       </Header>
       <Search>
@@ -113,7 +59,13 @@ const UserAvatar = styled(Avatar)`
   }
 `
 
-const IconsContainer = styled.div``
+const IconsContainer = styled.div`
+  &&& {
+    .MuiSvgIcon-root {
+      color: rgb(145, 145, 145);
+    }
+  }
+`
 
 const Search = styled.div`
   padding: 15px;
@@ -146,10 +98,13 @@ const SearchInput = styled(TextField)`
       }
 
       .MuiInputAdornment-root {
-        color: rgba(0, 0, 0, 0.54);
+        color: rgb(145, 145, 145);
       }
     }
   }
+`
+
+const Chats = styled.div`
 `
 
 export default Sidebar
