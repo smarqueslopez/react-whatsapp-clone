@@ -1,18 +1,27 @@
-import {
-  Avatar,
-  TextField,
-  InputAdornment
-} from '@material-ui/core'
+import { Avatar, TextField, InputAdornment } from '@material-ui/core'
 import styled from 'styled-components'
 import SearchIcon from '@material-ui/icons/Search'
-import { useState } from 'react'
-import { auth } from '../firebase'
+import { useEffect, useState } from 'react'
+import { auth, db } from '../firebase'
 import { useAuthState } from 'react-firebase-hooks/auth'
 import ProfileDrawer from './ProfileDrawer'
 import MenuSidebar from './MenuSidebar'
+import ChatSidebar from './ChatSidebar'
 
 function Sidebar() {
   const [user] = useAuthState(auth)
+
+  const [rooms, setRooms] = useState([])
+  useEffect(() => {
+    db.collection('rooms').onSnapshot((snapshot) =>
+      setRooms(
+        snapshot.docs.map((doc) => ({
+          id: doc.id,
+          data: doc.data()
+        }))
+      )
+    )
+  }, [])
 
   const [anchorDrawer, setAnchorDrawer] = useState(false)
   const openDrawer = () => setAnchorDrawer(true)
@@ -38,6 +47,17 @@ function Sidebar() {
           }}
         />
       </Search>
+      <Rooms>
+        {rooms.map((room) => (
+          <ChatSidebar
+            key={room.id}
+            id={room.id}
+            title={room.data.title}
+            date={room.data.date}
+            avatar={room.data.avatar}
+          />
+        ))}
+      </Rooms>
       <ProfileDrawer
         open={anchorDrawer}
         openDrawer={openDrawer}
@@ -47,9 +67,9 @@ function Sidebar() {
   )
 }
 
-const Container = styled.div``
+const Container = styled.aside``
 
-const Header = styled.div`
+const Header = styled.section`
   height: 80;
   padding: 15px;
   display: flex;
@@ -77,7 +97,7 @@ const IconsContainer = styled.div`
   }
 `
 
-const Search = styled.div`
+const Search = styled.section`
   padding: 15px;
   display: flex;
   justify-content: space-between;
@@ -114,7 +134,23 @@ const SearchInput = styled(TextField)`
   }
 `
 
-const Chats = styled.div`
+const Rooms = styled.section`
+  max-height: calc(100vh - 141px);
+  overflow-y: scroll;
+
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+    background-color: #f5f5f5;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.2);
+  }
+
+  ::-webkit-scrollbar-track {
+    background-color: rgba(255, 255, 255, 0.08);
+  }
 `
 
 export default Sidebar
