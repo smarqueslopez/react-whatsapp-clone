@@ -13,14 +13,16 @@ function Sidebar() {
 
   const [rooms, setRooms] = useState([])
   useEffect(() => {
-    db.collection('rooms').onSnapshot((snapshot) =>
-      setRooms(
-        snapshot.docs.map((doc) => ({
-          id: doc.id,
-          data: doc.data()
-        }))
+    db.collection('rooms')
+      .orderBy('date', 'desc')
+      .onSnapshot((snapshot) =>
+        setRooms(
+          snapshot.docs.map((doc) => ({
+            id: doc.id,
+            data: doc.data()
+          }))
+        )
       )
-    )
   }, [])
 
   const [anchorDrawer, setAnchorDrawer] = useState(false)
@@ -137,7 +139,7 @@ const SearchInput = styled(TextField)`
 
 const Rooms = styled.section`
   max-height: calc(100vh - 143px);
-  overflow-y: scroll;
+  overflow-y: auto;
 
   ::-webkit-scrollbar {
     width: 6px;
