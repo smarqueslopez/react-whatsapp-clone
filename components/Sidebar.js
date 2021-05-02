@@ -70,7 +70,7 @@ function Sidebar() {
 const Container = styled.aside``
 
 const Header = styled.section`
-  height: 80;
+  height: 80px;
   padding: 15px;
   display: flex;
   justify-content: space-between;
@@ -104,6 +104,7 @@ const Search = styled.section`
   align-items: center;
   border-radius: 2px;
   background-color: #f6f6f6;
+  border-bottom: 1px solid whitesmoke;
 `
 
 const SearchInput = styled(TextField)`
@@ -135,7 +136,7 @@ const SearchInput = styled(TextField)`
 `
 
 const Rooms = styled.section`
-  max-height: calc(100vh - 141px);
+  max-height: calc(100vh - 143px);
   overflow-y: scroll;
 
   ::-webkit-scrollbar {
@@ -150,6 +151,10 @@ const Rooms = styled.section`
 
   ::-webkit-scrollbar-track {
     background-color: rgba(255, 255, 255, 0.08);
+  }
+
+  @media only screen and (min-width: 1441px) {
+    max-height: calc(96vh - 143px);
   }
 `
 

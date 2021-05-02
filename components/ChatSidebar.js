@@ -9,40 +9,48 @@ function ChatSidebar({ id, title, avatar, date }) {
       </AvatarContainer>
       <RoomContainer>
         <Title>
-          <h2>{title}</h2>
-          <p>{new Date(date.seconds * 1000).toLocaleDateString('es-ES')}</p>
+          <span title={title}>{title}</span>
+          <span>
+            {new Date(date.seconds * 1000).toLocaleDateString('es-ES')}
+          </span>
         </Title>
-        <p>Last message...</p>
+        <LastMessage>
+          <User>User:</User>
+          <Message>Last message sending in chatroom</Message>
+        </LastMessage>
       </RoomContainer>
     </Container>
   )
 }
 
 const Container = styled.div`
-  padding: 10px;
+  max-width: 350px;
+  padding: 5px;
   display: flex;
+  overflow: hidden;
+  border-bottom: 1px solid whitesmoke;
 
   :hover,
   :active {
     background-color: #ebebeb;
+    cursor: pointer;
   }
 
-&&& {
-    .MuiAvatar-root {
-      width: 65px;
-      height: 65px;
-    }
-
+  .MuiAvatar-root {
+    width: 50px;
+    height: 50px;
+  }
 `
 
 const AvatarContainer = styled.div`
+  width: 60px;
   padding: 5px;
   display: flex;
   align-items: center;
 `
 
 const RoomContainer = styled.div`
-  width: 100%;
+  width: 270px;
   padding: 5px 5px 5px 10px;
   h2,
   p {
@@ -55,6 +63,22 @@ const Title = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+`
+
+const LastMessage = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`
+
+const User = styled.div``
+
+const Message = styled.div`
+  display: block;
+  padding: 0 5px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 `
 
 export default ChatSidebar
