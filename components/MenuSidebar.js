@@ -21,7 +21,7 @@ function MenuSidebar() {
     if (!input && !EmailValidator.validate(input)) {
       return null
     } else {
-      db.collection('chats').add({})
+      db.collection('rooms').add({})
     }
   }
 

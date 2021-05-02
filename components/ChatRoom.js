@@ -13,6 +13,7 @@ function ChatRoom() {
   const { id } = useParams()
 
   const [title, setTitle] = useState('')
+  const [type, setType] = useState('')
   const [avatar, setAvatar] = useState('')
 
   useEffect(() => {
@@ -21,6 +22,7 @@ function ChatRoom() {
         .doc(id)
         .onSnapshot((snapshot) => {
           setTitle(snapshot.data().title)
+          setType(snapshot.data().type)
           setAvatar(snapshot.data().avatar)
         })
     }
@@ -35,7 +37,7 @@ function ChatRoom() {
               <AvatarContainer src={avatar} />
               <InfoRoom>
                 <TitleRoom>{title}</TitleRoom>
-                <UserRoom>Users</UserRoom>
+                {type === 'chat' ? <></> : <UserRoom>Users</UserRoom>}
               </InfoRoom>
             </TitleContainer>
             <IconsContainer>
@@ -167,7 +169,9 @@ const InfoRoom = styled.div`
 
 const AvatarContainer = styled(Avatar)``
 
-const TitleRoom = styled.div``
+const TitleRoom = styled.h4`
+  font-weight: 500;
+`
 
 const UserRoom = styled.div``
 

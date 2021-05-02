@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import MenuItemChat from './MenuItemChat'
 import { Link } from 'react-router-dom'
 
-function ChatSidebar({ id, title, avatar, date }) {
+function ChatSidebar({ id, title, avatar, date, type }) {
   const [showOptions, setShowOptions] = useState(false)
 
   return (
@@ -18,13 +18,13 @@ function ChatSidebar({ id, title, avatar, date }) {
         </AvatarContainer>
         <RoomContainer>
           <Title>
-            <span title={title}>{title}</span>
+            <h4 title={title}>{title}</h4>
             <span>
               {new Date(date.seconds * 1000).toLocaleDateString('es-ES')}
             </span>
           </Title>
           <LastMessage>
-            <User>User:</User>
+            {type === 'chat' ? <></> : <User>User:</User>}
             <Message>Last message sending in chatroom</Message>
             {showOptions ? <MenuItemChat /> : <></>}
           </LastMessage>
@@ -74,12 +74,24 @@ const Title = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding: 0 5px;
+
+  h4 {
+    font-weight: 500;
+  }
+
+  span {
+    font-size: 12px;
+    font-weight: 300;
+    color: rgba(0, 0, 0, 0.6);
+  }
 `
 
 const LastMessage = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  color: rgba(0, 0, 0, 0.6);
 `
 
 const User = styled.div``

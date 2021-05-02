@@ -57,6 +57,7 @@ function Sidebar() {
             title={room.data.title}
             date={room.data.date}
             avatar={room.data.avatar}
+            type={room.data.type}
           />
         ))}
       </Rooms>
