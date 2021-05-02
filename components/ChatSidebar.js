@@ -2,32 +2,35 @@ import { Avatar } from '@material-ui/core'
 import { useState } from 'react'
 import styled from 'styled-components'
 import MenuItemChat from './MenuItemChat'
+import { Link } from 'react-router-dom'
 
 function ChatSidebar({ id, title, avatar, date }) {
   const [showOptions, setShowOptions] = useState(false)
 
   return (
-    <Container
-      onMouseEnter={() => setShowOptions(true)}
-      onMouseLeave={() => setShowOptions(false)}
-    >
-      <AvatarContainer>
-        <Avatar src={avatar} />
-      </AvatarContainer>
-      <RoomContainer>
-        <Title>
-          <span title={title}>{title}</span>
-          <span>
-            {new Date(date.seconds * 1000).toLocaleDateString('es-ES')}
-          </span>
-        </Title>
-        <LastMessage>
-          <User>User:</User>
-          <Message>Last message sending in chatroom</Message>
-          {showOptions ? <MenuItemChat /> : <></>}
-        </LastMessage>
-      </RoomContainer>
-    </Container>
+    <Link to={`/chat/${id}`}>
+      <Container
+        onMouseEnter={() => setShowOptions(true)}
+        onMouseLeave={() => setShowOptions(false)}
+      >
+        <AvatarContainer>
+          <Avatar src={avatar} />
+        </AvatarContainer>
+        <RoomContainer>
+          <Title>
+            <span title={title}>{title}</span>
+            <span>
+              {new Date(date.seconds * 1000).toLocaleDateString('es-ES')}
+            </span>
+          </Title>
+          <LastMessage>
+            <User>User:</User>
+            <Message>Last message sending in chatroom</Message>
+            {showOptions ? <MenuItemChat /> : <></>}
+          </LastMessage>
+        </RoomContainer>
+      </Container>
+    </Link>
   )
 }
 

@@ -3,6 +3,7 @@ import Sidebar from '../components/Sidebar'
 import { Drawer } from '@material-ui/core'
 import styled from 'styled-components'
 import ChatRoom from '../components/ChatRoom'
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 
 export default function Home() {
   return (
@@ -13,14 +14,23 @@ export default function Home() {
         <link rel='icon' href='/favicon.ico' />
       </Head>
       <Main>
-        <Container>
-          <SidebarContainer variant='persistent' anchor='left' open={true}>
-            <Sidebar />
-          </SidebarContainer>
-          <ChatContainer>
-            <ChatRoom />
-          </ChatContainer>
-        </Container>
+        <Router>
+          <Container>
+            <SidebarContainer variant='persistent' anchor='left' open={true}>
+              <Sidebar />
+            </SidebarContainer>
+            <Switch>
+              <ChatContainer>
+                <Route exact path='/'>
+                  <ChatRoom />
+                </Route>
+                <Route exact path='/chat/:id'>
+                  <ChatRoom />
+                </Route>
+              </ChatContainer>
+            </Switch>
+          </Container>
+        </Router>
       </Main>
     </div>
   )
@@ -91,4 +101,5 @@ const SidebarContainer = styled(Drawer)`
 const ChatContainer = styled.div`
   width: calc(100vw - 350px);
   height: 100%;
+  flex: 1;
 `
