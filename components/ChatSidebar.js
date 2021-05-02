@@ -1,9 +1,21 @@
 import { Avatar } from '@material-ui/core'
+import { useState } from 'react'
 import styled from 'styled-components'
+import MenuItemChat from './MenuItemChat'
 
 function ChatSidebar({ id, title, avatar, date }) {
+
+    const [showOptions, setShowOptions] = useState(false)
+
+  const mouseEnter = () => {
+    showOptions = true
+  }
+
   return (
-    <Container>
+    <Container
+      onMouseEnter={() => setShowOptions(true)}
+      onMouseLeave={() => setShowOptions(false)}
+    >
       <AvatarContainer>
         <Avatar src={avatar} />
       </AvatarContainer>
@@ -17,6 +29,7 @@ function ChatSidebar({ id, title, avatar, date }) {
         <LastMessage>
           <User>User:</User>
           <Message>Last message sending in chatroom</Message>
+          {showOptions ? <MenuItemChat /> : <></>}
         </LastMessage>
       </RoomContainer>
     </Container>
