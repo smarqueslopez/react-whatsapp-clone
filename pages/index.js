@@ -2,6 +2,7 @@ import Head from 'next/head'
 import Sidebar from '../components/Sidebar'
 import { Drawer } from '@material-ui/core'
 import styled from 'styled-components'
+import ChatRoom from '../components/ChatRoom'
 
 export default function Home() {
   return (
@@ -16,7 +17,9 @@ export default function Home() {
           <SidebarContainer variant='persistent' anchor='left' open={true}>
             <Sidebar />
           </SidebarContainer>
-          <ChatContainer></ChatContainer>
+          <ChatContainer>
+            <ChatRoom />
+          </ChatContainer>
         </Container>
       </Main>
     </div>

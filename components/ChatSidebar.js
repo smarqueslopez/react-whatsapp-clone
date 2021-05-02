@@ -4,12 +4,7 @@ import styled from 'styled-components'
 import MenuItemChat from './MenuItemChat'
 
 function ChatSidebar({ id, title, avatar, date }) {
-
-    const [showOptions, setShowOptions] = useState(false)
-
-  const mouseEnter = () => {
-    showOptions = true
-  }
+  const [showOptions, setShowOptions] = useState(false)
 
   return (
     <Container
