@@ -2,14 +2,19 @@ import { Avatar } from '@material-ui/core'
 import { useState } from 'react'
 import styled from 'styled-components'
 import MenuItemChat from './MenuItemChat'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 
 function ChatSidebar({ id, title, avatar, date, type }) {
   const [showOptions, setShowOptions] = useState(false)
 
+  const routeTo = `/chat/${id}`
+  const location = useLocation()
+  const className = location?.pathname === routeTo ? 'active' : ''
+
   return (
-    <Link to={`/chat/${id}`}>
+    <LinkContainer to={routeTo}>
       <Container
+        className={className}
         onMouseEnter={() => setShowOptions(true)}
         onMouseLeave={() => setShowOptions(false)}
       >
@@ -30,9 +35,16 @@ function ChatSidebar({ id, title, avatar, date, type }) {
           </LastMessage>
         </RoomContainer>
       </Container>
-    </Link>
+    </LinkContainer>
   )
 }
+
+const LinkContainer = styled(Link)`
+  .active {
+    background-color: #ebebeb;
+    cursor: pointer;
+  }
+`
 
 const Container = styled.div`
   max-width: 350px;
