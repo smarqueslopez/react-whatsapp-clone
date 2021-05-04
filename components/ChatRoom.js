@@ -77,7 +77,7 @@ function ChatRoom() {
               </InfoRoom>
             </TitleContainer>
             <IconsContainer>
-              <RoomMenu />
+              <RoomMenu type={type} />
             </IconsContainer>
           </HeaderContainer>
           <ChatContainer></ChatContainer>

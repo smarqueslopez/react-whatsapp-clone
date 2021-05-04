@@ -27,7 +27,7 @@ function RoomMenu({ type }) {
         open={Boolean(anchorMenu)}
         onClose={closeMenu}
       >
-        {type === 'user' ? (
+        {type === 'chat' ? (
           <MenuItem onClick={closeMenu}>Contact Info</MenuItem>
         ) : (
           <MenuItem onClick={closeMenu}>Group Info</MenuItem>
@@ -35,7 +35,7 @@ function RoomMenu({ type }) {
         <MenuItem onClick={closeMenu}>Select Messages</MenuItem>
         <MenuItem onClick={closeMenu}>Silent Notifications</MenuItem>
         <MenuItem onClick={closeMenu}>Empty Messages</MenuItem>
-        {type === 'user' ? (
+        {type === 'chat' ? (
           <MenuItem onClick={closeMenu}>Remove Chat</MenuItem>
         ) : (
           <MenuItem onClick={closeMenu}>Remove Group</MenuItem>

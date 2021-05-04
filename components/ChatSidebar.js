@@ -29,9 +29,9 @@ function ChatSidebar({ id, title, avatar, date, type }) {
             </span>
           </Title>
           <LastMessage>
-            {type === 'chat' ? <></> : <User>User:</User>}
+            {type === 'group' ? <User>User:</User> : <></>}
             <Message>Last message sending in chatroom</Message>
-            {showOptions ? <MenuItemChat /> : <></>}
+            {showOptions ? <MenuItemChat type={type} /> : <></>}
           </LastMessage>
         </RoomContainer>
       </Container>
