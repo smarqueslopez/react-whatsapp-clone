@@ -15,6 +15,16 @@ function ChatRoom() {
   const [title, setTitle] = useState('')
   const [type, setType] = useState('')
   const [avatar, setAvatar] = useState('')
+  const [lastSeen, setLastSeen] = useState('')
+  const [chatUsers, setChatUsers] = useState([])
+
+  const getLastSeen = () => {
+    return new Date(lastSeen.seconds * 1000).toLocaleDateString('es-ES', {
+      year: 'numeric',
+      month: 'numeric',
+      day: 'numeric'
+    })
+  }
 
   useEffect(() => {
     if (id) {
@@ -24,9 +34,29 @@ function ChatRoom() {
           setTitle(snapshot.data().title)
           setType(snapshot.data().type)
           setAvatar(snapshot.data().avatar)
+          setLastSeen(snapshot.data().lastSeen)
+          if (snapshot.data().type === 'group') {
+            db.collection('rooms')
+              .doc(id)
+              .collection('chatUsers')
+              .onSnapshot((snapshot) => {
+                setChatUsers([
+                  ...snapshot?.docs?.map((doc) => doc?.data()?.name)
+                ])
+              })
+          }
         })
     }
   }, [id])
+
+  const getChatUsers = () => {
+    return chatUsers.map((user, index) => {
+      if (index !== chatUsers.length - 1) {
+        return `${user}, `
+      }
+      return user
+    })
+  }
 
   return (
     <>
@@ -34,10 +64,16 @@ function ChatRoom() {
         <Container>
           <HeaderContainer>
             <TitleContainer>
-              <AvatarContainer src={avatar} />
+              <AvatarContainer title={title} src={avatar} />
               <InfoRoom>
-                <TitleRoom>{title}</TitleRoom>
-                {type === 'chat' ? <></> : <UserRoom>Users</UserRoom>}
+                <TitleRoom title={title}>{title}</TitleRoom>
+                {type !== 'chat' ? (
+                  <UserRoom title={getChatUsers()}>{getChatUsers()}</UserRoom>
+                ) : lastSeen ? (
+                  <Status>{`Last seen ${getLastSeen(lastSeen)}`}</Status>
+                ) : (
+                  <></>
+                )}
               </InfoRoom>
             </TitleContainer>
             <IconsContainer>
@@ -156,15 +192,19 @@ const HeaderContainer = styled.section`
 `
 
 const TitleContainer = styled.div`
+  width: calc(100% - 48px - 48px);
   display: flex;
   align-items: center;
   justify-content: center;
 `
 
 const InfoRoom = styled.div`
+  height: 100%;
+  width: calc(100% - 40px);
   padding: 5px 15px;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
 `
 
 const AvatarContainer = styled(Avatar)``
@@ -173,7 +213,19 @@ const TitleRoom = styled.h4`
   font-weight: 500;
 `
 
-const UserRoom = styled.div``
+const UserRoom = styled.div`
+  padding-top: 5px;
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.6);
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+`
+
+const Status = styled.div`
+  padding-top: 5px;
+  font-size: 14px;
+`
 
 const IconsContainer = styled.div`
   &&& {
@@ -190,7 +242,7 @@ const Container = styled.div`
   flex-direction: column;
 `
 
-const ChatContainer = styled.div`
+const ChatContainer = styled.section`
   width: 100%;
   height: calc(100% - 80px - 80px);
   max-height: calc(100% - 80px - 80px);
@@ -212,7 +264,7 @@ const ChatContainer = styled.div`
   }
 `
 
-const InputContainer = styled.div`
+const InputContainer = styled.section`
   width: 100%;
   height: 80px;
   padding: 0 5px;
