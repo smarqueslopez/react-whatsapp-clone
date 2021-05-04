@@ -100,17 +100,19 @@ const Title = styled.div`
 `
 
 const LastMessage = styled.div`
+  padding: 5px;
   display: flex;
   align-items: center;
   justify-content: center;
   color: rgba(0, 0, 0, 0.6);
 `
 
-const User = styled.div``
+const User = styled.div`
+  padding-right: 5px;
+`
 
 const Message = styled.div`
   display: block;
-  padding: 0 5px;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
