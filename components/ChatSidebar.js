@@ -100,7 +100,7 @@ const Title = styled.div`
 `
 
 const LastMessage = styled.div`
-  padding: 5px;
+  padding: 0 5px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -112,6 +112,7 @@ const User = styled.div`
 `
 
 const Message = styled.div`
+  padding: 5px 0;
   display: block;
   overflow: hidden;
   white-space: nowrap;
