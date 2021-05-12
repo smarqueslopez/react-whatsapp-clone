@@ -1,14 +1,13 @@
-import { Avatar, TextField, InputAdornment } from '@material-ui/core'
+import { Avatar, TextField, InputAdornment, Drawer } from '@material-ui/core'
 import styled from 'styled-components'
 import SearchIcon from '@material-ui/icons/Search'
 import { useEffect, useState } from 'react'
 import { auth, db } from '../firebase'
 import { useAuthState } from 'react-firebase-hooks/auth'
-import ProfileDrawer from './ProfileDrawer'
 import MenuSidebar from './MenuSidebar'
 import ChatSidebar from './ChatSidebar'
 
-function Sidebar() {
+function Sidebar({ openDrawer }) {
   const [user] = useAuthState(auth)
 
   const [rooms, setRooms] = useState([])
@@ -25,12 +24,17 @@ function Sidebar() {
       )
   }, [])
 
-  const [anchorDrawer, setAnchorDrawer] = useState(false)
-  const openDrawer = () => setAnchorDrawer(true)
-  const closeDrawer = () => setAnchorDrawer(false)
-
   return (
-    <Container>
+    <Drawer
+      variant='persistent'
+      anchor='left'
+      open={true}
+      PaperProps={{
+        style: {
+          width: '350px'
+        }
+      }}
+    >
       <Header>
         <UserAvatar src={user.photoURL} onClick={openDrawer} />
         <IconsContainer>
@@ -61,16 +65,9 @@ function Sidebar() {
           />
         ))}
       </Rooms>
-      <ProfileDrawer
-        open={anchorDrawer}
-        openDrawer={openDrawer}
-        closeDrawer={closeDrawer}
-      />
-    </Container>
+    </Drawer>
   )
 }
-
-const Container = styled.aside``
 
 const Header = styled.section`
   height: 80px;

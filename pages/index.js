@@ -1,9 +1,9 @@
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+import styled from 'styled-components'
 import Head from 'next/head'
 import Sidebar from '../components/Sidebar'
-import { Drawer } from '@material-ui/core'
-import styled from 'styled-components'
 import ChatRoom from '../components/ChatRoom'
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+import HomeChat from '../components/HomeChat'
 
 export default function Home() {
   return (
@@ -16,13 +16,11 @@ export default function Home() {
       <Main>
         <Router>
           <Container>
-            <SidebarContainer variant='persistent' anchor='left' open={true}>
-              <Sidebar />
-            </SidebarContainer>
+            <Sidebar />
             <Switch>
               <ChatContainer>
                 <Route exact path='/'>
-                  <ChatRoom />
+                  <HomeChat />
                 </Route>
                 <Route exact path='/chat/:id'>
                   <ChatRoom />
@@ -36,7 +34,7 @@ export default function Home() {
   )
 }
 
-const Main = styled.main`
+const Main = styled.div`
   width: 100vw;
   height: 100vh;
   display: flex;
@@ -52,6 +50,33 @@ const Main = styled.main`
     content: '';
     background-color: #009688;
     box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.06), 0 2px 5px 0 rgba(0, 0, 0, 0.2);
+  }
+
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+    background-color: #f5f5f5;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.2);
+  }
+
+  ::-webkit-scrollbar-track {
+    background-color: rgba(255, 255, 255, 0.08);
+  }
+
+  @media only screen and (max-width: 900px) {
+    max-width: 900px;
+    overflow-x: scroll;
+
+    section {
+      width: 900px;
+    }
+  }
+
+  @media only screen and (max-height: 512px) {
+    overflow-y: auto;
   }
 `
 
@@ -88,13 +113,6 @@ const Container = styled.div`
     .MuiDrawer-paperAnchorLeft {
       left: auto;
     }
-  }
-`
-
-const SidebarContainer = styled(Drawer)`
-  .MuiPaper-root {
-    width: 350px;
-    height: 100vh;
   }
 `
 

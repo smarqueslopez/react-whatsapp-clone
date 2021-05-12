@@ -1,7 +1,6 @@
 import { Avatar, IconButton, TextField } from '@material-ui/core'
 import styled from 'styled-components'
 import RoomMenu from './RoomMenu'
-import ComputerIcon from '@material-ui/icons/Computer'
 import { useParams } from 'react-router'
 import { useEffect, useState } from 'react'
 import { db } from '../firebase'
@@ -59,125 +58,48 @@ function ChatRoom() {
   }
 
   return (
-    <>
-      {id ? (
-        <Container>
-          <HeaderContainer>
-            <TitleContainer>
-              <AvatarContainer title={title} src={avatar} />
-              <InfoRoom>
-                <TitleRoom title={title}>{title}</TitleRoom>
-                {type !== 'chat' ? (
-                  <UserRoom title={getChatUsers()}>{getChatUsers()}</UserRoom>
-                ) : lastSeen ? (
-                  <Status>{`Last seen ${getLastSeen(lastSeen)}`}</Status>
-                ) : (
-                  <></>
-                )}
-              </InfoRoom>
-            </TitleContainer>
-            <IconsContainer>
-              <RoomMenu type={type} />
-            </IconsContainer>
-          </HeaderContainer>
-          <ChatContainer></ChatContainer>
-          <InputContainer>
-            <IconsContainer>
-              <IconButton>
-                <InsertEmoticonIcon />
-              </IconButton>
-              <IconButton>
-                <AttachFileIcon />
-              </IconButton>
-            </IconsContainer>
-            <MessageInputContainer>
-              <MessageInput placeholder='Write a message here' />
-            </MessageInputContainer>
-            <IconsContainer>
-              <IconButton>
-                <MicIcon />
-              </IconButton>
-            </IconsContainer>
-          </InputContainer>
-        </Container>
-      ) : (
-        <EmptyContainer>
-          <Image />
-          <Intro>Keep your phone connected</Intro>
-          <IntroSecondary>
-            WhatsApp Web connects to your phone to sync messages. To reduce data
-            usage, connect your phone to Wi-Fi.
-          </IntroSecondary>
-          <GetAppMsg>
-            <ComputerIcon />
-            <span>WhatsApp is available for Windows.</span>
-            <a href='' target='_blank'>
-              Get it here
-            </a>
-            .
-          </GetAppMsg>
-        </EmptyContainer>
-      )}
-    </>
+    <Container>
+      <HeaderContainer>
+        <TitleContainer>
+          <Avatar title={title} src={avatar} />
+          <InfoRoom>
+            <TitleRoom title={title}>{title}</TitleRoom>
+            {type !== 'chat' ? (
+              <UserRoom title={getChatUsers()}>{getChatUsers()}</UserRoom>
+            ) : lastSeen ? (
+              <Status>{`Last seen ${getLastSeen(lastSeen)}`}</Status>
+            ) : (
+              <></>
+            )}
+          </InfoRoom>
+        </TitleContainer>
+        <IconsContainer>
+          <RoomMenu type={type} />
+        </IconsContainer>
+      </HeaderContainer>
+      <ChatContainer>
+      </ChatContainer>
+      <InputContainer>
+        <IconsContainer>
+          <IconButton>
+            <InsertEmoticonIcon />
+          </IconButton>
+          <IconButton>
+            <AttachFileIcon />
+          </IconButton>
+        </IconsContainer>
+        <MessageInputContainer>
+          <MessageInput placeholder='Write a message here' />
+        </MessageInputContainer>
+        <IconsContainer>
+          <IconButton>
+            <MicIcon />
+          </IconButton>
+        </IconsContainer>
+      </InputContainer>
+    </Container>
   )
 }
-
-const EmptyContainer = styled.section`
-  width: 100%;
-  height: 100%;
-  padding-top: 28px;
-  padding-bottom: 28px;
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-  align-items: center;
-  justify-content: center;
-  cursor: default;
-  background-color: #f8f9fa;
-  border-bottom: 6px solid #4adf83;
-`
-
-const Image = styled.div`
-  width: 355px;
-  height: 355px;
-  margin: 0 auto;
-  border-radius: 50%;
-  background-image: url('/images/intro-connection-light.jpg');
-  background-repeat: no-repeat;
-  background-position: 50% 50%;
-  background-size: cover;
-`
-const Intro = styled.div`
-  margin-top: 38px;
-  font-size: 36px;
-  font-weight: 300;
-  color: #525252;
-  text-align: center;
-`
-const IntroSecondary = styled.div`
-  margin-top: 24px;
-  font-size: 14px;
-  line-height: 20px;
-  color: rgba(0, 0, 0, 0.45);
-  text-align: center;
-`
-const GetAppMsg = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: 34px;
-  margin-left: 5px;
-  text-align: unset;
-  color: rgba(0, 0, 0, 0.45);
-
-  span {
-    margin: 0 5px;
-  }
-
-  a {
-    color: #07bc4c;
-  }
-`
 
 const HeaderContainer = styled.section`
   height: 80px;
@@ -206,8 +128,6 @@ const InfoRoom = styled.div`
   flex-direction: column;
   justify-content: space-between;
 `
-
-const AvatarContainer = styled(Avatar)``
 
 const TitleRoom = styled.h4`
   font-weight: 500;
@@ -246,6 +166,7 @@ const ChatContainer = styled.section`
   width: 100%;
   height: calc(100% - 80px - 80px);
   max-height: calc(100% - 80px - 80px);
+  padding: 15px;
   background-image: url('/images/background-chat.png');
   overflow-y: auto;
 
