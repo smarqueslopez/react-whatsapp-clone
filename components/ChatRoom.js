@@ -1,6 +1,7 @@
 import { Avatar, IconButton, TextField } from '@material-ui/core'
 import styled from 'styled-components'
 import RoomMenu from './RoomMenu'
+import Chat from './Chat'
 import { useParams } from 'react-router'
 import { useEffect, useState } from 'react'
 import { db } from '../firebase'
@@ -78,6 +79,7 @@ function ChatRoom() {
         </IconsContainer>
       </HeaderContainer>
       <ChatContainer>
+        <Chat />
       </ChatContainer>
       <InputContainer>
         <IconsContainer>
@@ -166,7 +168,7 @@ const ChatContainer = styled.section`
   width: 100%;
   height: calc(100% - 80px - 80px);
   max-height: calc(100% - 80px - 80px);
-  padding: 15px;
+  padding: 0 15px 15px 15px;
   background-image: url('/images/background-chat.png');
   overflow-y: auto;
 
